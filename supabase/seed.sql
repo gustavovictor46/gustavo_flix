@@ -51,7 +51,7 @@ INSERT INTO videos (titulo, descricao, capa_url, video_url, categoria, ano, qual
 ('Häxan',
  'Documentário-ensaio sueco que explora a história da bruxaria e da superstição na Europa medieval, combinando dramatizações perturbadoras com imagens de arquivo e ilustrações da época.',
  'https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=400&h=600&fit=crop&q=80',
- 'hhttps://drive.google.com/file/d/1zn7vJRM-BFEICxUa0pdRbpBZ7f9w76HI/view?usp=drive_link/preview',
+ 'https://drive.google.com/file/d/1zn7vJRM-BFEICxUa0pdRbpBZ7f9w76HI/view?usp=sharing',
  'Horror & Sobrenatural', 1922, '1080p', TRUE),
 
 ('Faust',
