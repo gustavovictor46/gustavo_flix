@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
 /**
  * Header translúcido com logo, navegação, busca e avatar.
@@ -37,7 +38,7 @@ export default function Header({ searchQuery, onSearchChange }) {
     >
       <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-3 md:px-8">
         {/* Logo */}
-        <a href="#" className="group flex items-center gap-1 select-none">
+        <Link to="/" className="group flex items-center gap-1 select-none">
           <span className="text-2xl font-black tracking-tight md:text-3xl">
             <span className="text-brand-500 drop-shadow-[0_0_12px_rgba(229,9,20,0.5)] transition-all group-hover:drop-shadow-[0_0_20px_rgba(229,9,20,0.7)]">
               G
@@ -47,7 +48,7 @@ export default function Header({ searchQuery, onSearchChange }) {
               Flix
             </span>
           </span>
-        </a>
+        </Link>
 
         {/* Nav — Desktop */}
         <nav className="hidden items-center gap-8 md:flex" aria-label="Navegação principal">

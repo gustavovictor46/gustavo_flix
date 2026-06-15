@@ -1,98 +1,108 @@
 import { useState, useEffect } from 'react'
 import { supabase, supabaseConfigured } from '../lib/supabase'
 
-// Dados mock para desenvolvimento sem Supabase configurado
+// ─── ACERVO COMPLETO — DADOS MOCK ─────────────────────────────────────────────
+// Usado quando o Supabase não está configurado. Contém todos os 82 filmes do acervo.
 const MOCK_VIDEOS = [
-  {
-    id: 1,
-    titulo: 'Horizonte Perdido',
-    descricao: 'Em um futuro distante, a humanidade precisa encontrar um novo lar entre as estrelas. Uma tripulação corajosa embarca em uma missão sem precedentes rumo ao desconhecido.',
-    capa_url: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    categoria: 'Ficção Científica',
-    em_destaque: true,
-  },
-  {
-    id: 2,
-    titulo: 'Sombras da Noite',
-    descricao: 'Um detetive atormentado pelo passado investiga uma série de crimes misteriosos em uma cidade mergulhada na escuridão.',
-    capa_url: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-    categoria: 'Suspense',
-    em_destaque: false,
-  },
-  {
-    id: 3,
-    titulo: 'Além das Montanhas',
-    descricao: 'Uma jornada épica através de paisagens deslumbrantes e culturas ancestrais, seguindo dois viajantes em busca de respostas.',
-    capa_url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    categoria: 'Aventura',
-    em_destaque: false,
-  },
-  {
-    id: 4,
-    titulo: 'Código Vermelho',
-    descricao: 'Quando um vírus digital ameaça colapsar toda a infraestrutura global, apenas um grupo de hackers pode salvar o mundo.',
-    capa_url: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    categoria: 'Ação',
-    em_destaque: false,
-  },
-  {
-    id: 5,
-    titulo: 'O Último Refúgio',
-    descricao: 'Após um evento catastrófico, sobreviventes se reúnem em uma fortaleza isolada. Mas os maiores perigos estão dentro dos muros.',
-    capa_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-    categoria: 'Drama',
-    em_destaque: false,
-  },
-  {
-    id: 6,
-    titulo: 'Galáxia Interior',
-    descricao: 'Uma cientista brilhante descobre que a chave para viagens interestelares pode estar escondida dentro da mente humana.',
-    capa_url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-    categoria: 'Ficção Científica',
-    em_destaque: false,
-  },
-  {
-    id: 7,
-    titulo: 'Ruas de Tóquio',
-    descricao: 'Nas vibrantes ruas de Tóquio, um chef brasileiro luta para conquistar seu espaço na gastronomia japonesa.',
-    capa_url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    categoria: 'Drama',
-    em_destaque: false,
-  },
-  {
-    id: 8,
-    titulo: 'Tempestade Polar',
-    descricao: 'Uma equipe de resgate enfrenta condições extremas no Ártico para salvar os sobreviventes de um acidente aéreo.',
-    capa_url: 'https://images.unsplash.com/photo-1477346611705-65d1883cee1e?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-    categoria: 'Ação',
-    em_destaque: false,
-  },
-  {
-    id: 9,
-    titulo: 'Sussurros do Passado',
-    descricao: 'Uma historiadora descobre manuscritos antigos que revelam segredos capazes de mudar a história conhecida.',
-    capa_url: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
-    categoria: 'Suspense',
-    em_destaque: false,
-  },
-  {
-    id: 10,
-    titulo: 'Aurora Digital',
-    descricao: 'No ano de 2087, a linha entre humanos e inteligência artificial se torna cada vez mais tênue.',
-    capa_url: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80',
-    video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-    categoria: 'Ficção Científica',
-    em_destaque: false,
-  },
+  // ── HORROR & SOBRENATURAL ──────────────────────────────────────────────────
+  { id: 1, titulo: 'Häxan', descricao: 'Documentário-ensaio sobre bruxaria e superstição através dos séculos, mesclando dramatizações perturbadoras com fatos históricos.', capa_url: 'https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1922, qualidade: '1080p', em_destaque: true },
+  { id: 2, titulo: 'Faust', descricao: 'A eterna lenda de Fausto reimaginada por Murnau: um homem que vende sua alma ao diabo em troca de juventude e poder.', capa_url: 'https://images.unsplash.com/photo-1533158326339-7f3cf2404354?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1926, qualidade: '1080p', em_destaque: false },
+  { id: 3, titulo: 'Vampyr', descricao: 'Um jovem viajante chega a uma aldeia assombrada por uma presença vampírica. Obra-prima do horror atmosférico de Carl Dreyer.', capa_url: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1932, qualidade: '720p', em_destaque: false },
+  { id: 4, titulo: 'Cat People', descricao: 'Uma jovem sérvia em Nova York acredita que se transformará em pantera se ceder às suas paixões. Clássico de horror psicológico de Val Lewton.', capa_url: 'https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1942, qualidade: '1080p', em_destaque: false },
+  { id: 5, titulo: 'I Walked with a Zombie', descricao: 'Uma enfermeira canadense viaja ao Caribe para cuidar de uma mulher catatônica e descobre rituais vodu na ilha.', capa_url: 'https://images.unsplash.com/photo-1501862700950-18382cd41497?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1943, qualidade: '1080p', em_destaque: false },
+  { id: 6, titulo: 'Carnival of Souls', descricao: 'Após sobreviver a um acidente de carro, uma organista é perseguida por figuras fantasmagóricas em um pavilhão abandonado.', capa_url: 'https://images.unsplash.com/photo-1504593811423-6dd665756598?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1962, qualidade: '1080p', em_destaque: false },
+  { id: 7, titulo: 'Onibaba', descricao: 'No Japão medieval, duas mulheres sobrevivem matando samurais perdidos até que uma máscara demoníaca muda tudo.', capa_url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1964, qualidade: '720p', em_destaque: false },
+  { id: 8, titulo: 'Viy', descricao: 'Um seminarista é forçado a rezar três noites junto ao caixão de uma bruxa. Marco do horror fantástico soviético.', capa_url: 'https://images.unsplash.com/photo-1516410529446-2c777cb7366d?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1967, qualidade: '1080p', em_destaque: false },
+  { id: 9, titulo: 'Kuroneko', descricao: 'Duas mulheres assassinadas por samurais retornam como espíritos-gato para se vingar dos guerreiros. Beleza sombria do cinema japonês.', capa_url: 'https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1968, qualidade: '1080p', em_destaque: false },
+  { id: 10, titulo: 'Blind Beast', descricao: 'Um escultor cego sequestra uma modelo para usá-la como musa em sua arte obsessiva. Thriller perturbador e sensorial.', capa_url: 'https://images.unsplash.com/photo-1495344517868-8ebaf0a2044a?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Horror & Sobrenatural', ano: 1969, qualidade: '1080p', em_destaque: false },
+
+  // ── SUSPENSE & NOIR ────────────────────────────────────────────────────────
+  { id: 11, titulo: 'The Maltese Falcon', descricao: 'O detetive Sam Spade é arrastado para uma teia de mentiras e assassinatos em busca de uma valiosa estátua de falcão.', capa_url: 'https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Suspense & Noir', ano: 1941, qualidade: '1080p', em_destaque: false },
+  { id: 12, titulo: 'Vertigo', descricao: 'Um detetive com acrofobia é contratado para seguir uma mulher misteriosa e se vê preso em uma espiral de obsessão. Obra-prima de Hitchcock.', capa_url: 'https://images.unsplash.com/photo-1505533321630-975218a5f66f?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Suspense & Noir', ano: 1958, qualidade: '1080p', em_destaque: false },
+  { id: 13, titulo: 'Night Tide', descricao: 'Um marinheiro se apaixona por uma jovem que trabalha em um show de sereia, mas descobre que seus amantes anteriores morreram misteriosamente.', capa_url: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Suspense & Noir', ano: 1961, qualidade: '1080p', em_destaque: false },
+  { id: 14, titulo: 'What Ever Happened to Baby Jane?', descricao: 'Duas irmãs ex-atrizes vivem presas uma à outra em uma mansão decadente de Hollywood, onde ressentimento vira terror.', capa_url: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Suspense & Noir', ano: 1962, qualidade: '1080p', em_destaque: false },
+  { id: 15, titulo: 'Bonnie and Clyde', descricao: 'A história real dos amantes fora-da-lei Bonnie Parker e Clyde Barrow, que aterrorizaram o centro-sul dos EUA durante a Grande Depressão.', capa_url: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Suspense & Noir', ano: 1967, qualidade: '1080p', em_destaque: false },
+
+  // ── DRAMA CLÁSSICO ─────────────────────────────────────────────────────────
+  { id: 16, titulo: 'The Passion of Joan of Arc', descricao: 'O julgamento e martírio de Joana d\'Arc capturados em close-ups intensos. Uma das maiores performances do cinema mudo.', capa_url: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1928, qualidade: '720p', em_destaque: false },
+  { id: 17, titulo: 'Mädchen in Uniform', descricao: 'Em um internato feminino prussiano rígido, uma aluna desenvolve sentimentos profundos por sua professora. Pioneiro do cinema queer.', capa_url: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1931, qualidade: '1080p', em_destaque: false },
+  { id: 18, titulo: 'Children of Paradise', descricao: 'No bairro teatral de Paris do século XIX, quatro homens disputam o amor da bela Garance. Épico do romantismo francês.', capa_url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1945, qualidade: '720p', em_destaque: false },
+  { id: 19, titulo: 'Portrait of Jennie', descricao: 'Um pintor falido encontra uma jovem misteriosa que parece existir fora do tempo, e ela se torna sua musa e obsessão.', capa_url: 'https://images.unsplash.com/photo-1485163819542-13adeb5e0068?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1948, qualidade: '1080p', em_destaque: false },
+  { id: 20, titulo: 'The Red Shoes', descricao: 'Uma jovem bailarina é dilacerada entre o amor por um compositor e a devoção a um diretor de balé tirânico. Obra-prima visual de Powell & Pressburger.', capa_url: 'https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1948, qualidade: '1080p', em_destaque: false },
+  { id: 21, titulo: 'Olivia', descricao: 'Em um internato feminino na França do século XIX, uma nova aluna é atraída pela rivalidade entre duas professoras carismáticas.', capa_url: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1951, qualidade: '1080p', em_destaque: false },
+  { id: 22, titulo: 'Summer with Monika', descricao: 'Dois jovens fogem de Estocolmo para um verão idílico numa ilha. Quando a realidade retorna, o sonho desmorona. Clássico de Bergman.', capa_url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1953, qualidade: '720p', em_destaque: false },
+  { id: 23, titulo: 'The Cranes Are Flying', descricao: 'Durante a Segunda Guerra, uma jovem soviética luta para manter a esperança enquanto seu amado parte para o front.', capa_url: 'https://images.unsplash.com/photo-1477346611705-65d1883cee1e?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1957, qualidade: '1080p', em_destaque: false },
+  { id: 24, titulo: "The Children's Hour", descricao: 'Duas professoras têm suas vidas destruídas quando uma aluna espalha uma mentira maliciosa sobre seu relacionamento.', capa_url: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1961, qualidade: '1080p', em_destaque: false },
+  { id: 25, titulo: 'When the Cat Comes', descricao: 'Um gato mágico com óculos de sol chega a uma cidade tcheca e revela as verdadeiras cores das pessoas — literalmente.', capa_url: 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1963, qualidade: '1080p', em_destaque: false },
+  { id: 26, titulo: 'My Fair Lady', descricao: 'Um professor de fonética arrogante aposta que pode transformar uma florista cockney em uma dama da alta sociedade londrina.', capa_url: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1964, qualidade: '720p', em_destaque: false },
+  { id: 27, titulo: 'The Battle of Algiers', descricao: 'Reconstrução realista da luta pela independência da Argélia contra a França. Um dos filmes políticos mais influentes da história.', capa_url: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Drama Clássico', ano: 1966, qualidade: '1080p', em_destaque: false },
+
+  // ── CINEMA BRASILEIRO ──────────────────────────────────────────────────────
+  { id: 28, titulo: 'Mulher', descricao: 'Drama pioneiro do cinema brasileiro sobre a condição feminina na sociedade patriarcal dos anos 1930.', capa_url: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1931, qualidade: '1080p', em_destaque: false },
+  { id: 29, titulo: 'Rio, 40 Graus', descricao: 'Cinco meninos vendem amendoim nos pontos turísticos do Rio enquanto a cidade pulsa em um domingo de verão. Marco do Cinema Novo.', capa_url: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1955, qualidade: '1080p', em_destaque: false },
+  { id: 30, titulo: 'Rio, Zona Norte', descricao: 'Um compositor de samba do morro carioca luta pelo reconhecimento de sua arte enquanto é explorado pela indústria musical.', capa_url: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1957, qualidade: '1080p', em_destaque: false },
+  { id: 31, titulo: 'Orfeu Negro', descricao: 'O mito de Orfeu e Eurídice transportado para o Carnaval do Rio de Janeiro. Vencedor da Palma de Ouro e do Oscar.', capa_url: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1959, qualidade: '1080p', em_destaque: false },
+  { id: 32, titulo: 'Deus e o Diabo na Terra do Sol', descricao: 'No sertão nordestino, um vaqueiro oscila entre o fanatismo religioso e o cangaço. Obra-prima de Glauber Rocha.', capa_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1964, qualidade: '1080p', em_destaque: false },
+  { id: 33, titulo: 'Os Fuzis', descricao: 'Soldados são enviados ao sertão para proteger um depósito de comida da população faminta. Retrato brutal da desigualdade brasileira.', capa_url: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1964, qualidade: '720p', em_destaque: false },
+  { id: 34, titulo: 'A Falecida', descricao: 'Uma mulher obcecada com a própria morte planeja um funeral grandioso enquanto sua vida se desmorona ao redor. Baseado em Nelson Rodrigues.', capa_url: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1965, qualidade: '1080p', em_destaque: false },
+  { id: 35, titulo: 'São Paulo, Sociedade Anônima', descricao: 'Um jovem paulistano vive uma crise existencial na metrópole industrializada dos anos 60, dividido entre mulheres e o vazio moderno.', capa_url: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1965, qualidade: '576p', em_destaque: false },
+  { id: 36, titulo: 'Todas as Mulheres do Mundo', descricao: 'Um conquistador carioca encontra a mulher de sua vida e descobre que o amor é mais complicado do que a sedução.', capa_url: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1966, qualidade: '720p', em_destaque: false },
+  { id: 37, titulo: 'Processo de Satanás na Vila de Leva-e-Traz', descricao: 'Sátira medieval sobre uma comunidade que coloca o próprio diabo em julgamento. Raro e inventivo cinema brasileiro.', capa_url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1967, qualidade: '720p', em_destaque: false },
+  { id: 38, titulo: 'Terra em Transe', descricao: 'Um poeta-jornalista se debate entre idealismo e pragmatismo político em um país latino-americano fictício. Alegoria tropicalista de Glauber Rocha.', capa_url: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Brasileiro', ano: 1967, qualidade: '720p', em_destaque: false },
+
+  // ── NOUVELLE VAGUE ─────────────────────────────────────────────────────────
+  { id: 39, titulo: 'Pickpocket', descricao: 'Um jovem intelectual parisiense se torna batedor de carteiras compulsivo, buscando transcendência no crime. Obra-prima minimalista de Bresson.', capa_url: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1959, qualidade: '1080p', em_destaque: false },
+  { id: 40, titulo: 'Léon Morin, Priest', descricao: 'Durante a ocupação nazista, uma viúva ateísta inicia um duelo intelectual com um jovem padre carismático que se torna paixão proibida.', capa_url: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1961, qualidade: '1080p', em_destaque: false },
+  { id: 41, titulo: 'Cléo de 5 à 7', descricao: 'Duas horas na vida de uma cantora parisiense enquanto espera o resultado de um exame médico. Tempo real, ansiedade e beleza.', capa_url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1962, qualidade: '720p', em_destaque: false },
+  { id: 42, titulo: 'Vivre Sa Vie', descricao: 'Em doze capítulos, acompanhamos Nana, uma jovem parisiense que abandona tudo e mergulha na prostituição. Godard em sua fase mais humana.', capa_url: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1962, qualidade: '1080p', em_destaque: false },
+  { id: 43, titulo: 'Le Bonheur', descricao: 'Um jovem carpinteiro feliz com sua família decide que amar duas mulheres ao mesmo tempo só multiplicará sua felicidade. Agnès Varda desafia o espectador.', capa_url: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1965, qualidade: '720p', em_destaque: false },
+  { id: 44, titulo: 'Au Hasard Balthazar', descricao: 'A vida de um burro chamado Balthazar serve como espelho da crueldade e bondade humanas. Cinema como forma de transcendência.', capa_url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1966, qualidade: '1080p', em_destaque: false },
+  { id: 45, titulo: 'Masculin Féminin', descricao: 'Um jovem idealista de esquerda se apaixona por uma aspirante a cantora pop na Paris dos anos 60. Os filhos de Marx e da Coca-Cola.', capa_url: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1966, qualidade: '1080p', em_destaque: false },
+  { id: 46, titulo: 'Belle de Jour', descricao: 'Uma jovem burguesa parisiense, incapaz de se entregar ao marido, decide trabalhar secretamente em um bordel durante as tardes. Buñuel e Deneuve.', capa_url: 'https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1967, qualidade: '1080p', em_destaque: false },
+  { id: 47, titulo: 'La Chinoise', descricao: 'Estudantes maoístas em um apartamento parisiense debatem revolução enquanto o mundo real bate à porta. Godard profetiza Maio de 68.', capa_url: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1967, qualidade: '720p', em_destaque: false },
+  { id: 48, titulo: "Je t'aime, Je t'aime", descricao: 'Após uma tentativa de suicídio, um homem é usado em um experimento de viagem no tempo e fica preso em fragmentos de seu passado amoroso.', capa_url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1968, qualidade: '720p', em_destaque: false },
+  { id: 49, titulo: 'Stolen Kisses', descricao: 'Antoine Doinel, após ser dispensado do exército, tenta encontrar seu lugar no mundo enquanto trabalha como detetive particular. Truffaut em tom leve.', capa_url: 'https://images.unsplash.com/photo-1485163819542-13adeb5e0068?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Nouvelle Vague', ano: 1968, qualidade: '720p', em_destaque: false },
+
+  // ── CINEMA JAPONÊS ─────────────────────────────────────────────────────────
+  { id: 50, titulo: 'Ugetsu', descricao: 'Dois camponeses buscam fortuna durante uma guerra civil e encontram desejos que os levam à ruína. Fantasmas e ganância no Japão feudal.', capa_url: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1952, qualidade: '1080p', em_destaque: false },
+  { id: 51, titulo: 'A Story from Chikamatsu', descricao: 'No Japão do período Edo, um amor proibido entre uma mulher casada e um empregado leva ambos a um destino trágico. Mizoguchi em seu auge.', capa_url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1954, qualidade: '720p', em_destaque: false },
+  { id: 52, titulo: 'The Blue Sky Maiden', descricao: 'Uma jovem aeromoça navega as complexidades do Japão pós-guerra entre tradição e modernidade. Raro drama social japonês.', capa_url: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1957, qualidade: '1080p', em_destaque: false },
+  { id: 53, titulo: 'Trilogia The Human Condition', descricao: 'Épico de 9 horas sobre um pacifista japonês forçado a participar da máquina de guerra imperial. Uma das maiores sagas do cinema.', capa_url: 'https://images.unsplash.com/photo-1516410529446-2c777cb7366d?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1959, qualidade: '1080p', em_destaque: false },
+  { id: 54, titulo: 'When a Woman Ascends the Stairs', descricao: 'Uma hostess de bar em Ginza luta para manter sua dignidade em um mundo controlado por homens. Retrato delicado de Naruse.', capa_url: 'https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1960, qualidade: '1080p', em_destaque: false },
+  { id: 55, titulo: 'Harakiri', descricao: 'Um samurai idoso pede para cometer seppuku no portão de um clã, mas sua verdadeira intenção é revelar a hipocrisia dos guerreiros.', capa_url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1962, qualidade: '1080p', em_destaque: false },
+  { id: 56, titulo: 'Woman in the Dunes', descricao: 'Um entomologista fica preso no fundo de uma duna de areia com uma mulher misteriosa. Alegoria existencialista magistral.', capa_url: 'https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1964, qualidade: '1080p', em_destaque: false },
+  { id: 57, titulo: 'A Story Written with Water', descricao: 'Um jovem dividido entre o desejo por sua madrasta e a culpa que o consome. Cinema japonês em seu registro mais íntimo e perturbador.', capa_url: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1965, qualidade: '1080p', em_destaque: false },
+  { id: 58, titulo: 'Samurai Rebellion', descricao: 'Um samurai obediente finalmente se revolta quando o senhor feudal exige que sua nora volte ao castelo. Toshiro Mifune em chamas.', capa_url: 'https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1967, qualidade: '1080p', em_destaque: false },
+  { id: 59, titulo: 'Eros + Massacre', descricao: 'Paralelo entre o anarquista Sakae Ōsugi nos anos 1920 e estudantes radicais dos anos 60. Épico de 3 horas sobre amor e revolução.', capa_url: 'https://images.unsplash.com/photo-1495344517868-8ebaf0a2044a?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Japonês', ano: 1969, qualidade: '1080p', em_destaque: false },
+
+  // ── CINEMA ITALIANO ────────────────────────────────────────────────────────
+  { id: 60, titulo: "L'Avventura", descricao: 'Durante um cruzeiro nas ilhas Eólias, uma mulher desaparece misteriosamente e seu namorado se envolve com a melhor amiga dela. Antonioni redefine o cinema.', capa_url: 'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Italiano', ano: 1960, qualidade: '1080p', em_destaque: false },
+  { id: 61, titulo: 'La Dolce Vita', descricao: 'Um jornalista de celebridades vagueia pela Roma noturna em busca de significado entre festas, amores e vazio existencial. Fellini icônico.', capa_url: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Italiano', ano: 1960, qualidade: '720p', em_destaque: false },
+  { id: 62, titulo: 'La Notte', descricao: 'Um casal milanês enfrenta a morte de seu casamento durante uma longa noite de festas e solidão. Marcello Mastroianni e Jeanne Moreau.', capa_url: 'https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Italiano', ano: 1961, qualidade: '1080p', em_destaque: false },
+  { id: 63, titulo: "L'Eclisse", descricao: 'Uma jovem romana termina um relacionamento e inicia outro, mas a verdadeira protagonista é a alienação da vida moderna. O vazio de Antonioni.', capa_url: 'https://images.unsplash.com/photo-1505533321630-975218a5f66f?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Italiano', ano: 1962, qualidade: '1080p', em_destaque: false },
+  { id: 64, titulo: '8½', descricao: 'Um cineasta em crise criativa foge para suas memórias e fantasias enquanto deveria estar dirigindo seu novo filme. Fellini autobiográfico.', capa_url: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Italiano', ano: 1963, qualidade: '1080p', em_destaque: false },
+  { id: 65, titulo: 'Medea', descricao: 'Pasolini reimagina a tragédia grega de Medeia com Maria Callas, em paisagens arcaicas onde mito e barbárie se encontram.', capa_url: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Italiano', ano: 1969, qualidade: '720p', em_destaque: false },
+  { id: 66, titulo: 'Porcile', descricao: 'Duas histórias paralelas: um canibal medieval e um jovem burguês moderno, ambos consumidos por seus apetites. Pasolini provocador.', capa_url: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Italiano', ano: 1969, qualidade: '1080p', em_destaque: false },
+
+  // ── CINEMA INDIANO ─────────────────────────────────────────────────────────
+  { id: 67, titulo: 'Pather Panchali', descricao: 'A infância de Apu em uma aldeia pobre de Bengala. Primeiro filme da Trilogia de Apu de Satyajit Ray — o início do cinema indiano moderno.', capa_url: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Indiano', ano: 1955, qualidade: '1080p', em_destaque: false },
+  { id: 68, titulo: 'Aparajito', descricao: 'Apu cresce em Benares e Calcutá, dividido entre cuidar da mãe viúva e buscar educação na cidade grande. Segundo capítulo da trilogia.', capa_url: 'https://images.unsplash.com/photo-1501862700950-18382cd41497?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Indiano', ano: 1956, qualidade: '1080p', em_destaque: false },
+  { id: 69, titulo: 'Apur Sansar', descricao: 'Apu, agora adulto, encontra o amor inesperadamente mas a tragédia o força a confrontar o significado de sua existência. Final da trilogia.', capa_url: 'https://images.unsplash.com/photo-1533158326339-7f3cf2404354?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Indiano', ano: 1959, qualidade: '1080p', em_destaque: false },
+  { id: 70, titulo: 'Anuradha', descricao: 'Uma talentosa cantora abandona sua carreira para se dedicar ao marido médico em uma vila remota, mas o sacrifício cobra seu preço.', capa_url: 'https://images.unsplash.com/photo-1504593811423-6dd665756598?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Cinema Indiano', ano: 1959, qualidade: 'DVDRip', em_destaque: false },
+
+  // ── EXPERIMENTAL & VANGUARDA ───────────────────────────────────────────────
+  { id: 71, titulo: 'Dainah, the Mixed', descricao: 'Curta experimental sobre cruzeiro transatlântico mesclando classes sociais e identidades raciais. Vanguarda francesa dos anos 30.', capa_url: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1932, qualidade: '720p', em_destaque: false },
+  { id: 72, titulo: 'Guns of the Trees', descricao: 'Duas jovens casais em Nova York enfrentam ansiedade existencial na era atômica. Cinema underground de Jonas Mekas.', capa_url: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1961, qualidade: '1080p', em_destaque: false },
+  { id: 73, titulo: 'La Jetée', descricao: 'Após a Terceira Guerra Mundial, cientistas usam viagem no tempo para salvar a humanidade. Contado inteiramente em fotografias. Obra-prima de Chris Marker.', capa_url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1962, qualidade: '720p', em_destaque: false },
+  { id: 74, titulo: 'Salut les Cubains', descricao: 'Agnès Varda transforma 4.000 fotografias tiradas em Cuba em uma celebração vibrante da revolução e da cultura cubana.', capa_url: 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1963, qualidade: '1080p', em_destaque: false },
+  { id: 75, titulo: 'Soy Cuba', descricao: 'Quatro episódios sobre a vida em Cuba antes da revolução, filmados com coreografias de câmera extraordinárias. Propaganda virou arte pura.', capa_url: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1964, qualidade: '1080p', em_destaque: false },
+  { id: 76, titulo: 'The Koumiko Mystery', descricao: 'Chris Marker retrata uma jovem japonesa durante os Jogos Olímpicos de Tóquio de 1964, mesclando intimidade e cultura.', capa_url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1965, qualidade: '1080p', em_destaque: false },
+  { id: 77, titulo: 'Daisies', descricao: 'Duas jovens decidem que, como o mundo é corrupto, elas também serão. Anarquia feminista e visual do cinema tcheco.', capa_url: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1966, qualidade: '1080p', em_destaque: false },
+  { id: 78, titulo: 'EMOTION', descricao: 'Curta experimental japonês que explora estados emocionais através de imagens fragmentadas e som distorcido.', capa_url: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1966, qualidade: '1080p', em_destaque: false },
+  { id: 79, titulo: 'Fuses', descricao: 'Carolee Schneemann filma a intimidade sexual de um casal e transforma em pintura cinematográfica. Marco do cinema de vanguarda feminista.', capa_url: 'https://images.unsplash.com/photo-1485163819542-13adeb5e0068?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1967, qualidade: '1080p', em_destaque: false },
+  { id: 80, titulo: 'Uncle Yanco', descricao: 'Agnès Varda visita seu tio grego excêntrico que vive em uma casa-barco na Califórnia. Retrato familiar e artístico cheio de charme.', capa_url: 'https://images.unsplash.com/photo-1505533321630-975218a5f66f?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1967, qualidade: '1080p', em_destaque: false },
+  { id: 81, titulo: 'Tetralogia das Estações de Marcel Hanoun', descricao: 'Quatro filmes que mapeiam as estações do ano e da vida humana. Cinema contemplativo e poético de Marcel Hanoun.', capa_url: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1968, qualidade: '1080p', em_destaque: false },
+  { id: 82, titulo: 'Black Panthers', descricao: 'Agnès Varda documenta o movimento dos Panteras Negras em Oakland, capturando discursos e a energia revolucionária dos anos 60.', capa_url: 'https://images.unsplash.com/photo-1504593811423-6dd665756598?w=400&h=600&fit=crop&q=80', video_url: 'https://drive.google.com/file/d/SEU_FILE_ID/preview', categoria: 'Experimental & Vanguarda', ano: 1968, qualidade: '1080p', em_destaque: false },
 ]
 
 /**
@@ -124,9 +134,9 @@ export function useVideos() {
 
         const { data, error: supaError } = await supabase
           .from('videos')
-          .select('id, titulo, descricao, capa_url, video_url, categoria, em_destaque')
+          .select('id, titulo, descricao, capa_url, video_url, categoria, ano, qualidade, em_destaque')
           .order('em_destaque', { ascending: false })
-          .order('titulo', { ascending: true })
+          .order('ano', { ascending: true })
 
         if (supaError) throw supaError
 

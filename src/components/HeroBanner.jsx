@@ -27,9 +27,21 @@ export default function HeroBanner({ video, onPlay, onInfo }) {
       {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 pb-16 md:px-8 md:pb-24">
         {/* Category Badge */}
-        <span className="mb-4 inline-block rounded-full bg-brand-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-400 ring-1 ring-brand-500/30 backdrop-blur-sm">
-          {video.categoria}
-        </span>
+        <div className="mb-4 flex items-center gap-3">
+          <span className="inline-block rounded-full bg-brand-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-400 ring-1 ring-brand-500/30 backdrop-blur-sm">
+            {video.categoria}
+          </span>
+          {video.ano && (
+            <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-gray-300 ring-1 ring-white/10 backdrop-blur-sm">
+              {video.ano}
+            </span>
+          )}
+          {video.qualidade && (
+            <span className="inline-block rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase text-gray-400 ring-1 ring-white/10 backdrop-blur-sm">
+              {video.qualidade}
+            </span>
+          )}
+        </div>
 
         {/* Title */}
         <h1 className="text-shadow-hero mb-4 max-w-2xl text-4xl font-black leading-tight tracking-tight md:text-6xl lg:text-7xl">

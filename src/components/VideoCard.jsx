@@ -33,9 +33,16 @@ export default function VideoCard({ video, onPlay }) {
       {/* Info — visible on hover */}
       <div className="absolute inset-x-0 bottom-0 translate-y-2 p-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         <h3 className="truncate text-sm font-bold text-white">{video.titulo}</h3>
-        <span className="mt-0.5 inline-block text-[11px] font-medium uppercase tracking-wider text-brand-400">
-          {video.categoria}
-        </span>
+        <div className="mt-0.5 flex items-center gap-2">
+          <span className="text-[11px] font-medium uppercase tracking-wider text-brand-400">
+            {video.ano || ''}
+          </span>
+          {video.qualidade && (
+            <span className="rounded bg-white/15 px-1 py-0.5 text-[9px] font-bold uppercase text-gray-300">
+              {video.qualidade}
+            </span>
+          )}
+        </div>
       </div>
     </button>
   )
